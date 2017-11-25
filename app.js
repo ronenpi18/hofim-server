@@ -7,7 +7,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/router');
 
-var PORT = process.env.PORT || 8080;
+// var PORT = process.env.PORT || 8080;
 //connect to MongoDB
 mongoose.connect('mongodb://ronenpi18:wigitechDB@cluster0-shard-00-00-n9k3j.mongodb.net:27017,cluster0-shard-00-01-n9k3j.mongodb.net:27017,cluster0-shard-00-02-n9k3j.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 var db = mongoose.connection;
@@ -54,6 +54,6 @@ app.use(function (err, req, res, next) {
 
 
 // listen on port 3000
-app.listen(PORT, function () {
-    console.log('Express app listening on port 3000');
+app.listen(process.env.PORT || 8080, function () {
+    console.log('Express app listening on port 8080');
 });
