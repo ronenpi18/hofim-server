@@ -67,6 +67,15 @@ var BeachSchema = new mongoose.Schema({
     weather:{ //future use...
         type:Array,
         required: false
+    },
+    city:{
+        type:String,
+        required: false
+    },
+    time_zone:{
+        type:String,
+        required: false
+
     }
 });
 

@@ -137,7 +137,8 @@ router.post('/add', function (req, res, next) {
         req.body.wind_speed &&
         req.body.water_tmp &&
         req.body.tmp_min &&
-        req.body.tmp_max) {
+        req.body.tmp_max &&
+        req.body.city) {
 
         var BeachData = {
             lat: req.body.lat,
@@ -151,7 +152,10 @@ router.post('/add', function (req, res, next) {
             wind_speed: req.body.wind_speed,
             water_tmp:req.body.water_tmp,
             tmp_min:req.body.tmp_min,
-            tmp_max:req.body.tmp_max
+            tmp_max:req.body.tmp_max,
+            city:req.body.city,
+            time_zone:req.body.time_zone,
+            report_jellyfish:req.body.report_jellyfish
         }
 
         Beach.create(BeachData, function (error, Beach) {
@@ -167,7 +171,7 @@ router.post('/add', function (req, res, next) {
         err.status = 400;
         return next(err);
     }
-})
+});
 
 
 
