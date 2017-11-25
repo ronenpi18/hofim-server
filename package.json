@@ -7,6 +7,9 @@
     "start": "app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "npm": "5.5.x" /* latest version*/
+  },
   "author": "Ronen Pinhasov Ph.D",
   "license": "ISC",
   "dependencies": {
