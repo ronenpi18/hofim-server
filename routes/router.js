@@ -35,6 +35,11 @@ router.get('/get_data_by_id',function(req,res,next){
         });
 });
 
+// //get current weather by coordinates
+// router.post('/current/weather',function (req,res,next) {
+//
+// })
+
 //update field datastring
 router.put('/update/tmp', function (req, res, next) {
     var update_data = {

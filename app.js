@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/router');
+var now = require("date-now")
 
 // var PORT = process.env.PORT || 8080;
 //connect to MongoDB
@@ -55,5 +56,5 @@ app.use(function (err, req, res, next) {
 
 // listen on port 3000
 app.listen(process.env.PORT || 8080, function () {
-    console.log('Express app listening on port 8080');
+    console.log('Express app listening on port 8080 started at:'+ now());
 });
