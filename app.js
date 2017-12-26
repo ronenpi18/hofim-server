@@ -7,9 +7,9 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/router');
 var now = require("date-now")
-var Beach = require('../hofim/models/beach');
+var Beach = require('./models/beach');
 var schedule = require('node-schedule');
- var PORT = process.env.PORT || 3001;
+ var PORT = process.env.PORT || 3002;
 //connect to MongoDB
 mongoose.connect('mongodb://ronenpi18:wigitechDB@cluster0-shard-00-00-n9k3j.mongodb.net:27017,cluster0-shard-00-01-n9k3j.mongodb.net:27017,cluster0-shard-00-02-n9k3j.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 var db = mongoose.connection;
