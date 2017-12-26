@@ -8,7 +8,7 @@ var unirest = require('unirest');
 // var data_handler = require('./src/date_handler');
 // var hour = data_handler.get_hour;
 var time = require('time');
-var path    = require("path");
+// var path    = require("path");
 // Create a new Date instance, representing the current instant in time
 var now = new time.Date();
 
@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
         console.log("header found:"+req.header("authorization"))
         return res.send('The api is in /v1/api/');
     }
-    res.sendFile(path.join(__dirname+'/err.html'));
+    // res.sendFile('/index.html');
 });
 
 //get list of beaches coordinates by GET request with country in query, NOTE: Don't forget the form of return : { "data":[{lon:..,lat:..},{...},{...}...]}}
