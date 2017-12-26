@@ -10,6 +10,7 @@
   "author": "Ronen Pinhasov Ph.D",
   "license": "ISC",
   "dependencies": {
+    "assert": "^1.4.1",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.18.2",
     "client-http": "0.0.7",
@@ -19,7 +20,16 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "mongoose": "^4.13.5",
+    "node-rest-client": "^3.1.0",
+    "node-schedule": "^1.2.5",
     "openweather-apis": "^3.3.5",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "sync-request": "^4.1.0",
+    "then-request": "^4.1.0",
+    "time": "^0.12.0",
+    "unirest": "^0.5.1",
+    "util": "^0.10.3",
+    "worldweatheronline-api": "^2.2.3",
+    "xml2js": "^0.4.19"
   }
 }

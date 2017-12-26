@@ -7,7 +7,8 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/router');
 var now = require("date-now")
-
+var Beach = require('../hofim/models/beach');
+var schedule = require('node-schedule');
 // var PORT = process.env.PORT || 8080;
 //connect to MongoDB
 mongoose.connect('mongodb://ronenpi18:wigitechDB@cluster0-shard-00-00-n9k3j.mongodb.net:27017,cluster0-shard-00-01-n9k3j.mongodb.net:27017,cluster0-shard-00-02-n9k3j.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
@@ -53,8 +54,14 @@ app.use(function (err, req, res, next) {
     res.send(err.message);
 });
 
+//database handler
 
 // listen on port 3000
 app.listen(process.env.PORT || 8080, function () {
     console.log('Express app listening on port 8080 started at:'+ now());
+});
+var unirest = require('unirest');
+
+schedule.scheduleJob({hour: 0, minute: 5}, function(){
+
 });

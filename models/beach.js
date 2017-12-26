@@ -26,11 +26,6 @@ var BeachSchema = new mongoose.Schema({
         require: true,
         trim: true
     },
-    waves_height:{
-        type:Number,
-        unique: false,
-        require: true
-    },
     report_jellyfish:{ //?
         type:Number,
         unique: false,
@@ -44,29 +39,29 @@ var BeachSchema = new mongoose.Schema({
         type:Boolean,
         required:true
     },
-    wind_degree:{   //where to find this shit?
-        type:Number,
-        required:true
-    },
-    wind_speed:{  //? where to get??
-        type:Number,
-        required:true
-    },
-    water_tmp:{ //where from??
-        type:Number,
-        required:true
-    },
-    tmp_min:{
-        type:Number,
-        required:true
-    },
-    tmp_max:{
-        type:Number,
-        required:true
-    },
-    weather:{ //future use...
+    weather_general:{ //future use...
         type:Array,
         required: false
+    },
+    weather_hourly:{
+        type:Array,
+        required: false
+    },
+    weather_current:{
+        type:String
+    },
+    weather_tomorrow:{
+        type:String,
+        required: false
+    },
+    weather_2days:{
+        type:String,
+        required: false
+    },
+    weather_3days:{
+        type:String,
+        required: false
+
     },
     city:{
         type:String,
@@ -78,6 +73,7 @@ var BeachSchema = new mongoose.Schema({
 
     }
 });
+
 
 
 var Beach = mongoose.model('Beach', BeachSchema);
