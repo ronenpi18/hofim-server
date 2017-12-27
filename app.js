@@ -7,9 +7,9 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/router');
 var now = require("date-now")
-var Beach = require('./models/beach');
+var Beach = require('/models/beach');
 var schedule = require('node-schedule');
- var PORT = process.env.PORT || 3002;
+ var PORT = process.env.PORT || 8080;
 //connect to MongoDB
 mongoose.connect('mongodb://ronenpi18:wigitechDB@cluster0-shard-00-00-n9k3j.mongodb.net:27017,cluster0-shard-00-01-n9k3j.mongodb.net:27017,cluster0-shard-00-02-n9k3j.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 var db = mongoose.connection;
@@ -61,8 +61,8 @@ app.listen(PORT, function () {
     console.log('Express app listening on port 8080 started at:'+ now());
 });
 var unirest = require('unirest');
-var BASE_URL="https://hofim.herokuapp.com";
-schedule.scheduleJob({hour: 22, minute: 10}, function(){
+var BASE_URL="http://hofim-hofim.7e14.starter-us-west-2.openshiftapps.com";
+schedule.scheduleJob({hour: 0, minute: 5}, function(){
     unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
         .send()

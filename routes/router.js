@@ -450,7 +450,7 @@ router.put('/updated/weather/current',function (req,res,next) {
     Beach.find({}, function(err, users) {
         users.forEach(function(user) {
             // for(var i=0;i<7)
-            var hourly_array = user.weather_general.weather[0].hourly[now]
+            var hourly_array = user.weather_general[0].weather[0].hourly[now]
             Beach.findByIdAndUpdate(user._id,{weather_hourly:hourly_array})
                 .exec(function (error, beach) {
                     if (error) {
@@ -467,6 +467,7 @@ router.put('/updated/weather/current',function (req,res,next) {
                 });
         })
     })
+    res.send("done")
 })
 
 module.exports = router;
