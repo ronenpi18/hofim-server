@@ -1,9 +1,9 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
-var Beach = require("../models/beach");
-var Backup = require("../models/backup");
-var Coordinates = require("../models/coordinates_list");
+var Beach = require('../models/beach');
+var Backup = require('../models/backup');
+var Coordinates = require('../models/coordinates_list');
 var unirest = require('unirest');
 // var data_handler = require('./src/date_handler');
 // var hour = data_handler.get_hour;
