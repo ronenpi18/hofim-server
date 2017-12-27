@@ -464,6 +464,7 @@ router.put('/updated/weather/current',function (req,res,next) {
                             console.log("yay-entered");
                         }
                     }
+                });
         })
     })
 })
