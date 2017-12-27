@@ -62,7 +62,7 @@ app.listen(PORT, function () {
 });
 var unirest = require('unirest');
 var BASE_URL="https://hofim.herokuapp.com";
-schedule.scheduleJob({hour: 0, minute: 5}, function(){
+schedule.scheduleJob({hour: 22, minute: 10}, function(){
     unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
         .send()
