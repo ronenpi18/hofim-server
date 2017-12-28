@@ -63,7 +63,7 @@ app.listen(server_port, function () {
     console.log('Express app listening on port 8080 started at:'+ now());
 });
 var unirest = require('unirest');
-var BASE_URL="http://localhost:8080";
+var BASE_URL="http://hofim-hofim1.7e14.starter-us-west-2.openshiftapps.com";
 schedule.scheduleJob({hour: 2, minute: 2}, function(){
     unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
