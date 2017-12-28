@@ -5,9 +5,9 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-var routes = require('./routes/router');
+var routes = require("./routes/router");
 var now = require('date-now');
-var Beach = require('/models/beach.js');
+var Beach = require("./models/beach.js");
 var schedule = require('node-schedule');
  var PORT = process.env.PORT || 8080;
 //connect to MongoDB
