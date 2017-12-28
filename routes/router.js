@@ -470,5 +470,29 @@ router.put('/updated/weather/current',function (req,res,next) {
     })
     res.send("done")
 })
+router.put('/updated/weather/current1',function (req,res,next) {
+    var now = get_hour();
+    Beach.find({}, function(err, users) {
+        users.forEach(function(user) {
+            // for(var i=0;i<7)
+            var hourly_array = user.weather_general[0].weather[1].hourly[now]
+            Beach.findByIdAndUpdate(user._id,{weather_hourly:hourly_array})
+                .exec(function (error, beach) {
+                    if (error) {
+                        next(error);
+                    } else {
+                        if (beach === null) {
+                            var err = new Error('Not authorized! Go back!');
+                            err.status = 400;
+                            next(err);
+                        } else {
+                            console.log("yay-entered");
+                        }
+                    }
+                });
+        })
+    })
+    res.send("done")
+})
 
 module.exports = router;
