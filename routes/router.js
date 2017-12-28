@@ -7,7 +7,7 @@ var Coordinates = require('../models/coordinates_list');
 var unirest = require('unirest');
 // var data_handler = require('./src/date_handler');
 // var hour = data_handler.get_hour;
-var time = require('time');
+// var time = require('time');
 // var path    = require("path");
 // Create a new Date instance, representing the current instant in time
 var now = new time.Date();
@@ -356,7 +356,8 @@ router.put('/update/weather_hourly',function(req,res,next){
 
 //TODO refactor
 function get_hour() {
-    var now_hour = time.localtime(Date.now() / 1000).hours;
+    var date = new Date();
+    var now_hour = date.getHours();
     if(now_hour>=0 && now_hour<3){
         return 0;
     }

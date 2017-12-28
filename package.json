@@ -26,7 +26,6 @@
     "request": "^2.83.0",
     "sync-request": "^4.1.0",
     "then-request": "^4.1.0",
-    "time": "^0.12.0",
     "unirest": "^0.5.1",
     "util": "^0.10.3",
     "worldweatheronline-api": "^2.2.3",

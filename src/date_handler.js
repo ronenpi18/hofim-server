@@ -1,9 +1,9 @@
 var time = require('time');
 
 // Create a new Date instance, representing the current instant in time
-var now = new time.Date();
+// var now = new time.Date();
 
-now.setTimezone("Asia/Jerusalem");
+// now.setTimezone("Asia/Jerusalem");
 
 var WWO = require('worldweatheronline-api');
 
@@ -50,7 +50,7 @@ function monipulation_data_first(json) {
 }
 
 function get_hour() {
-    var now_hour = time.localtime(Date.now() / 1000).hours;
+    var now_hour =0
     if(now_hour>=0 && now_hour<3){
         return 0;
     }
