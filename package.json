@@ -4,7 +4,6 @@
   "description": "hofim middle-ware",
   "main": "app.js",
   "scripts": {
-    "postinstall": "npm install",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,5 +31,9 @@
     "util": "^0.10.3",
     "worldweatheronline-api": "^2.2.3",
     "xml2js": "^0.4.19"
+  },
+  "engines": {
+    "node": ">= 0.10",
+    "npm": ">= 1.4"
   }
 }
