@@ -76,5 +76,5 @@ var BeachSchema = new mongoose.Schema({
 
 
 
-var Beach = mongoose.model('Beach', BeachSchema);
+var Beach = mongoose.model('beaches', BeachSchema);
 module.exports = Beach;
