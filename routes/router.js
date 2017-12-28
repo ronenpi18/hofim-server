@@ -10,7 +10,7 @@ var unirest = require('unirest');
 // var time = require('time');
 // var path    = require("path");
 // Create a new Date instance, representing the current instant in time
-var now = new time.Date();
+// var now = new time.Date();
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
