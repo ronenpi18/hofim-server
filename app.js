@@ -64,7 +64,7 @@ app.listen(server_port, function () {
 });
 var unirest = require('unirest');
 var BASE_URL="http://hofim-hofim1.7e14.starter-us-west-2.openshiftapps.com";
-schedule.scheduleJob({hour: 2, minute: 22}, function(){
+schedule.scheduleJob({hour: 2, minute: 25}, function(){
     unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
         .send()
