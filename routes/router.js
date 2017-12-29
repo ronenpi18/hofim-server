@@ -237,47 +237,7 @@ router.put('/update/weather_hourly',function(req,res,next){
         users.forEach(function(user) {
             array_objs.push(user._doc.weather_general)
         })
-       // res.send(array_objs)
-        // var json =
-        //         JSON.stringify(user);
-        //     var j1 = JSON.stringify(json)
-        //     j1 = JSON.parse(j1)
-        //     j1 = JSON.stringify((JSON.parse(j1))["weather_general"])
-        //     j1 = JSON.stringify((JSON.parse(j1)["weather"]))
-        //     Beach.findByIdAndUpdate(user._id, {weather_hourly: j1 })
-        //         .exec(function (error, beach) {
-        //             if (error) {
-        //                 next(error);
-        //             } else {
-        //                 if (beach === null) {
-        //                     var err = new Error('Not authorized! Go back!');
-        //                     err.status = 400;
-        //                     next(err);
-        //                 } else {
-        //                     console.log("yay");
-        //                 }
-        //             }
-        //         });
 
-        // res.send("good")
-
-        // for(var i=0;i<array_objs.length;i++) {
-        //
-        //     Beach.findByIdAndUpdate(users[i]._id, {weather_hourly: array_objs[i].weather })
-        //         .exec(function (error, beach) {
-        //             if (error) {
-        //                 next(error);
-        //             } else {
-        //                 if (beach === null) {
-        //                     var err = new Error('Not authorized! Go back!');
-        //                     err.status = 400;
-        //                     next(err);
-        //                 } else {
-        //                     console.log("yay");
-        //                 }
-        //             }
-        //         });
-        // }
     }).then(function () {
         return res.send("good"+'\n'+JSON.parse(JSON.stringify({data:JSON.stringify(array_objs)})));
 
@@ -285,74 +245,6 @@ router.put('/update/weather_hourly',function(req,res,next){
 
 });
 
-//enter general data to db
-// router.put('/update/weather_general', function (req, res, next) {
-//     Beach.find({}, function(err, users) {
-//         var userMap = {};
-//         var cords_first="'";
-//         var cords_sec="'";
-//         var counter = 0;
-//         var object_location = {lat:0,lon:0}
-//         var array_objs =[];
-//         users.forEach(function(user) {
-//             counter++;
-//             if(counter<users.length/2) {
-//                 //   console.log(users.length/2)
-//                 cords_first += user.lat + ',' + user.lon + ';'
-//                 object_location.lat=user.lat;
-//                 object_location.lon=user.lon;
-//                 array_objs.push(object_location)
-//             }
-//             if(counter>=users.length/2){
-//                 //  console.log(counter);
-//                 cords_sec += user.lat + ',' + user.lon + ';'
-//
-//             }
-//         });
-//         unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
-//             .headers({'Content-Type': 'application/x-www-form-urlencoded'})
-//             .send({ "q": cords_first, "format": 'json' , "key":'62a39ebb20f94c32873132417172611' })
-//             .end(function (response) {
-//                 for(var i=0;i<array_objs.length;i++){
-//                     Beach.findByIdAndUpdate(users[i]._id,{weather_general:response.body.data.area[i]})
-//                         .exec(function (error, beach) {
-//                             if (error) {
-//                                 next(error);
-//                             } else {
-//                                 if (beach === null) {
-//                                     var err = new Error('Not authorized! Go back!');
-//                                     err.status = 400;
-//                                     next(err);
-//                                 } else {
-//                                     console.log("yay");
-//                                 }
-//                             }
-//                         });
-//                 }
-//                 res.send("good")
-//                 // array_objs.forEach(function (data,i) {
-//                 //     Beach.findOneAndUpdate(data,{weather_general:response.body.data.area[i]})
-//                 //         .exec(function (error, beach) {
-//                 //             if (error) {
-//                 //                 next(error);
-//                 //             } else {
-//                 //                 if (beach === null) {
-//                 //                     var err = new Error('Not authorized! Go back!');
-//                 //                     err.status = 400;
-//                 //                     next(err);
-//                 //                 } else {
-//                 //                     console.log((data));
-//                 //                 }
-//                 //             }
-//                 //         });
-//                 // })
-//             });
-//
-//         console.log((cords_first+'\n\n'+cords_sec));
-//         //});
-//     });
-//     return res.send("good");
-// });
 
 //TODO refactor
 function get_hour() {
@@ -435,14 +327,15 @@ router.put('/update/weather_general/3',function(req,res,next){
                                     err.status = 400;
                                     next(err);
                                 } else {
-                                    console.log("yay-entered");
+                                    //console.log("yay-entered");
                                     if(counter<138){
                                         counter++;
                                     }
                                     else{
-                                        counter=0
+                                        console.log("entered: "+counter);
+                                        counter=0;
 
-                                        return res.send("done")
+                                        return res.send("done");
                                     }
                                 }
                             }
@@ -456,6 +349,8 @@ router.put('/update/weather_general/3',function(req,res,next){
 
 router.put('/updated/weather/current',function (req,res,next) {
     var now = get_hour();
+    var counter=0;
+
     Beach.find({}, function(err, users) {
         users.forEach(function(user) {
             // for(var i=0;i<7)
@@ -470,8 +365,15 @@ router.put('/updated/weather/current',function (req,res,next) {
                             err.status = 400;
                             next(err);
                         } else {
-                            console.log("yay-entered");
-                        }
+                            if(counter<138){
+                                counter++;
+                            }
+                            else{
+                                console.log("entered: "+counter);
+                                counter=0;
+
+                                return res.send("done");
+                            }                        }
                     }
                 });
         })
@@ -480,6 +382,8 @@ router.put('/updated/weather/current',function (req,res,next) {
 })
 router.put('/updated/weather/current1',function (req,res,next) {
     var now = get_hour();
+    var counter=0;
+
     Beach.find({}, function(err, users) {
         users.forEach(function(user) {
             // for(var i=0;i<7)
@@ -494,8 +398,15 @@ router.put('/updated/weather/current1',function (req,res,next) {
                             err.status = 400;
                             next(err);
                         } else {
-                            console.log("yay-entered");
-                        }
+                            if(counter<138){
+                                counter++;
+                            }
+                            else{
+                                console.log("entered: "+counter);
+                                counter=0;
+
+                                return res.send("done");
+                            }                        }
                     }
                 });
         })
