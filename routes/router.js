@@ -402,7 +402,7 @@ function get_hour() {
 
 router.put('/update/weather_general/3',function(req,res,next){
     var beaches=[];
-
+    var counter=0;
     Beach.find({}, function(err, users) {
         users.forEach(function(user) {
             unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
@@ -436,13 +436,21 @@ router.put('/update/weather_general/3',function(req,res,next){
                                     next(err);
                                 } else {
                                     console.log("yay-entered");
+                                    if(counter<138){
+                                        counter++;
+                                    }
+                                    else{
+                                        counter=0
+
+                                        return res.send("done")
+                                    }
                                 }
                             }
                         });
                 })
         })
+        return res.send()
     })
-
     return res.send("done")
 })
 

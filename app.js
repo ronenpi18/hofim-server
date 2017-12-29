@@ -64,7 +64,7 @@ app.listen(server_port, function () {
 });
 var unirest = require('unirest');
 var BASE_URL="http://hofim-hofim1.7e14.starter-us-west-2.openshiftapps.com";
-schedule.scheduleJob({hour: 2, minute: 2}, function(){
+schedule.scheduleJob({hour: 2, minute: 22}, function(){
     unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
         .send()
@@ -145,7 +145,7 @@ schedule.scheduleJob({hour: 21, minute: 1}, function(){
             console.log("db updating....")
         })
 });
-schedule.scheduleJob({hour: 0, minute: 1}, function(){
+schedule.scheduleJob({hour: 0, minute: 10}, function(){
     unirest.put(BASE_URL+'/v1/api/updated/weather/current1')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
         .send()
