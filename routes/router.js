@@ -302,7 +302,7 @@ router.put('/update/weather_general/3',function(req,res,next){
                 .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
                 .end(function (response) {
                     var data1 = response.body.data;
-                    for (var i=0;i<7;i++){
+                    for (var i=0;i<5;i++){
                         delete data1.weather[i].astronomy;
                         for(var k=0;k<8;k++){
                             delete data1.weather[i].hourly[k].waterTemp_F
