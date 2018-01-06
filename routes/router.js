@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
 //get list of beaches coordinates by GET request with country in query, NOTE: Don't forget the form of return : { "data":[{lon:..,lat:..},{...},{...}...]}}
 router.get('/get_beaches_coords_country',function (req,res,next) {
     Coordinates.findOne({
-        country:req.query.country
+        country:"Israel"
     },
         function (err,obj) {
             res.send(JSON.parse(obj['data']))
@@ -413,5 +413,43 @@ router.put('/updated/weather/current1',function (req,res,next) {
     })
     res.send("done")
 })
+
+function degreesToRadians(degrees) {
+    return degrees * Math.PI / 180;
+}
+
+function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+    var earthRadiusKm = 6371;
+
+    var dLat = degreesToRadians(lat2-lat1);
+    var dLon = degreesToRadians(lon2-lon1);
+
+    lat1 = degreesToRadians(lat1);
+    lat2 = degreesToRadians(lat2);
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return (earthRadiusKm * c) <= 0.5; //radius
+}
+
+// console.log(distanceInKmBetweenEarthCoordinates(32.119277, 34.782073, 32.079671, 34.766260));
+
+router.post('/report/jellyfish',function (req,res,next) {
+    //if((req.body.kind && req.body.state &&  req.body.now_time && req.body.locationObj) !== null ) {
+    //     var kind = req.body.kind;
+    //     var state = req.body.state;
+    //     var time = req.body.now_time;
+        var location = req.body.locationObj;
+        var test = req.body.test1;
+        res.send((distanceInKmBetweenEarthCoordinates(location.lat, location.lon, test.lat, test.lon)));
+    //  }
+  //  else{
+ //       return res.send("faild, please check all data");
+  //  }
+
+})
+
+
 
 module.exports = router;
