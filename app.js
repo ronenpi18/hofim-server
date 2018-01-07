@@ -64,15 +64,15 @@ app.listen(server_port, function () {
 });
 var unirest = require('unirest');
 var BASE_URL="http://hofim-hofim1.7e14.starter-us-west-2.openshiftapps.com";
-// schedule.scheduleJob({hour: 2, minute: 5}, function(){
-//     unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
-//         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
-//         .send()
-//         .end(function (response) {
-//             console.log(response+'\n');
-//             console.log("db updating....")
-//         })
-// });
+schedule.scheduleJob({hour: 2, minute: 5}, function(){
+    unirest.put(BASE_URL+'/v1/api/update/weather_general/3')
+        .headers({'Content-Type': 'application/x-www-form-urlencoded'})
+        .send()
+        .end(function (response) {
+            console.log(response+'\n');
+            console.log("db updating....")
+        })
+});
 
 schedule.scheduleJob({hour: 3, minute: 1}, function(){
     unirest.put(BASE_URL+'/v1/api/updated/weather/current')
