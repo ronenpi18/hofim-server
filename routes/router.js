@@ -301,51 +301,119 @@ router.put('/update/weather_general/3',function(req,res,next){
                 .headers({'Content-Type': 'application/x-www-form-urlencoded'})
                 .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
                 .end(function (response) {
-                    var data1 = response.body.data;
-                    for (var i=0;i<5;i++){
-                        delete data1.weather[i].astronomy;
-                        for(var k=0;k<8;k++){
-                            delete data1.weather[i].hourly[k].waterTemp_F
-                            delete data1.weather[i].hourly[k].FeelsLikeF
-                            delete data1.weather[i].hourly[k].WindGustMiles
-                            delete data1.weather[i].hourly[k].WindChillF
-                            delete data1.weather[i].hourly[k].DewPointF
-                            delete data1.weather[i].hourly[k].HeatIndexF
-                            delete data1.weather[i].hourly[k].weatherIconUrl
-                            delete data1.weather[i].hourly[k].windspeedMiles
-                            delete data1.weather[i].hourly[k].tempF
+                    try {
+                        var data1 = response.body.data;
+                        for (var i = 0; i < 5; i++) {
+                            delete data1.weather[i].astronomy;
+                            for (var k = 0; k < 8; k++) {
+                                delete data1.weather[i].hourly[k].waterTemp_F
+                                delete data1.weather[i].hourly[k].FeelsLikeF
+                                delete data1.weather[i].hourly[k].WindGustMiles
+                                delete data1.weather[i].hourly[k].WindChillF
+                                delete data1.weather[i].hourly[k].DewPointF
+                                delete data1.weather[i].hourly[k].HeatIndexF
+                                delete data1.weather[i].hourly[k].weatherIconUrl
+                                delete data1.weather[i].hourly[k].windspeedMiles
+                                delete data1.weather[i].hourly[k].tempF
+                            }
                         }
-                    }
 
-                    Beach.findByIdAndUpdate(user._id,{weather_general:data1})
-                        .exec(function (error, beach) {
-                            if (error) {
-                                next(error);
-                            } else {
-                                if (beach === null) {
-                                    var err = new Error('Not authorized! Go back!');
-                                    err.status = 400;
-                                    next(err);
+                        Beach.findByIdAndUpdate(user._id, {weather_general: data1})
+                            .exec(function (error, beach) {
+                                if (error) {
+                                    next(error);
                                 } else {
-                                    //console.log("yay-entered");
-                                    if(counter<138){
-                                        counter++;
-                                    }
-                                    else{
-                                        console.log("entered: "+counter);
-                                        counter=0;
+                                    if (beach === null) {
+                                        var err = new Error('Not authorized! Go back!');
+                                        err.status = 400;
+                                        next(err);
+                                    } else {
+                                        //console.log("yay-entered");
+                                        if (counter < 138) {
+                                            counter++;
+                                        }
+                                        else {
+                                            console.log("entered: " + counter);
+                                            counter = 0;
 
-                                        return res.send("done");
+                                            return res.send("done");
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                    }catch (e){
+                        console.log(user);
+                    }
                 })
         })
         return res.send()
     })
     return res.send("done")
 })
+
+
+
+
+router.put('/update/weather_general/3/test',function(req,res,next){
+    var beaches=[];
+    var counter=0;
+    Beach.find({lat:32.017448,lon:34.738196}, function(err, users) {
+        users.forEach(function(user) {
+            unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
+                .headers({'Content-Type': 'application/x-www-form-urlencoded'})
+                .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
+                .end(function (response) {
+                    try {
+                        var data1 = response.body.data;
+                        for (var i = 0; i < 5; i++) {
+                            delete data1.weather[i].astronomy;
+                            for (var k = 0; k < 8; k++) {
+                                delete data1.weather[i].hourly[k].waterTemp_F
+                                delete data1.weather[i].hourly[k].FeelsLikeF
+                                delete data1.weather[i].hourly[k].WindGustMiles
+                                delete data1.weather[i].hourly[k].WindChillF
+                                delete data1.weather[i].hourly[k].DewPointF
+                                delete data1.weather[i].hourly[k].HeatIndexF
+                                delete data1.weather[i].hourly[k].weatherIconUrl
+                                delete data1.weather[i].hourly[k].windspeedMiles
+                                delete data1.weather[i].hourly[k].tempF
+                            }
+                        }
+
+                        Beach.findByIdAndUpdate(user._id, {weather_general: data1})
+                            .exec(function (error, beach) {
+                                if (error) {
+                                    next(error);
+                                } else {
+                                    if (beach === null) {
+                                        var err = new Error('Not authorized! Go back!');
+                                        err.status = 400;
+                                        next(err);
+                                    } else {
+                                        //console.log("yay-entered");
+                                        if (counter < 138) {
+                                            counter++;
+                                        }
+                                        else {
+                                            console.log("entered: " + counter);
+                                            counter = 0;
+
+                                            return res.send("done");
+                                        }
+                                    }
+                                }
+                            });
+                    }catch (e){
+                        console.log(user);
+                    }
+                })
+        })
+        return res.send()
+    })
+    return res.send("done")
+})
+
+
 
 router.put('/updated/weather/current',function (req,res,next) {
     var now = get_hour();
