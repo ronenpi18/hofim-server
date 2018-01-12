@@ -342,7 +342,8 @@ router.put('/update/weather_general/3',function(req,res,next){
                                 }
                             });
                     }catch (e){
-                        console.log(user);
+                        console.log(user && e);
+                        return res.send();
                     }
                 })
         })
@@ -503,18 +504,36 @@ function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
 
 // console.log(distanceInKmBetweenEarthCoordinates(32.119277, 34.782073, 32.079671, 34.766260));
 
-router.post('/report/jellyfish',function (req,res,next) {
-    //if((req.body.kind && req.body.state &&  req.body.now_time && req.body.locationObj) !== null ) {
-    //     var kind = req.body.kind;
-    //     var state = req.body.state;
-    //     var time = req.body.now_time;
-        var location = req.body.locationObj;
-        var test = req.body.test1;
-        res.send((distanceInKmBetweenEarthCoordinates(location.lat, location.lon, test.lat, test.lon)));
-    //  }
-  //  else{
- //       return res.send("faild, please check all data");
-  //  }
+router.post('/report',function (req,res,next) {
+    var kind = req.body.kind;
+    var level = req.body.lvl;
+    var location = req.body.locationObj; //current user's location
+
+    var test = req.body.test1; // beaches
+    //TODO rename request params
+    function jellyFishReportHandler(location, test, level) {
+        
+    }
+
+    function FlagReportHandler(location, level) {
+        
+    }
+
+    //TODO automation for reports.
+    switch (kind){ //add cases for report
+        case 0:
+            jellyFishReportHandler(location,test,level);
+            res.send({kind:"Jellyfish",status_num:0,lvl:level});
+            break;
+        case 1:
+            FlagReportHandler(location,level);
+            res.send({kind:"Flag",status_num:1,lvl:level});
+            break;
+        default:
+            res.status(400);
+            break;
+    }
+    //res.send((distanceInKmBetweenEarthCoordinates(location.lat, location.lon, test.lat, test.lon)));
 
 })
 
