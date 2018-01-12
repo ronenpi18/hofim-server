@@ -292,7 +292,7 @@ function get_hour() {
 function requestExc(user, callback) {
     unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
         .headers({'Content-Type': 'application/x-www-form-urlencoded'})
-        .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
+        .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'3fbb73e6022f4776a56142908161810' })
         .end(function (res) {
             if (res.error) {
                 console.log('GET error', res.error)
