@@ -289,7 +289,20 @@ function get_hour() {
 
 
 }
-
+function requestExc(user, callback) {
+    unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
+        .headers({'Content-Type': 'application/x-www-form-urlencoded'})
+        .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
+        .end(function (res) {
+            if (res.error) {
+                console.log('GET error', res.error)
+                callback(res.error, null)
+            } else {
+                console.log('GET response', res.body)
+                callback(null, res.body)
+            }
+        })
+}
 
 
 router.put('/update/weather_general/3',function(req,res,next){
@@ -297,12 +310,12 @@ router.put('/update/weather_general/3',function(req,res,next){
     var counter=0;
     Beach.find({}, function(err, users) {
         users.forEach(function(user) {
-            unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
-                .headers({'Content-Type': 'application/x-www-form-urlencoded'})
-                .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
-                .end(function (response) {
+            var response = requestExc(user,function(error, res1) {
+                // console.log("date array is " + dateArray)
+                if (error === null) {
+                    // respondToSender(res["rate"], res["date"], sender, queryDict)
                     try {
-                        var data1 = response.body.data;
+                        var data1 = res1.data;
                         for (var i = 0; i < 5; i++) {
                             delete data1.weather[i].astronomy;
                             for (var k = 0; k < 8; k++) {
@@ -345,7 +358,17 @@ router.put('/update/weather_general/3',function(req,res,next){
                         console.log(user && e);
                         return res.send();
                     }
-                })
+                } else {
+                    console.log("check ur callback function")
+                   // sendTextMessage(sender, "Imi pare rau, dar am intimpinat o problema in comunicarea cu BNR")
+                }
+            })
+            // unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
+            //     .headers({'Content-Type': 'application/x-www-form-urlencoded'})
+            //     .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
+            //     .end(function (response) {
+            //
+            //     })
         })
         return res.send()
     })
