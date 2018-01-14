@@ -298,8 +298,15 @@ function requestExc(user, callback) {
                 console.log('GET error', res.error)
                 callback(res.error, null)
             } else {
-                console.log('GET response', res.body)
-                callback(null, res.body)
+                if(res.body.data) {
+                    console.log('GET response', res.body)
+                    callback(null, res.body)
+                }else{
+                    setTimeout(function() {
+                        console.log('GET response', res.body)
+                        callback(null, res.body)
+                    }, 200);
+                }
             }
         })
 }
@@ -349,7 +356,7 @@ router.put('/update/weather_general/3',function(req,res,next){
                                             console.log("entered: " + counter);
                                             counter = 0;
 
-                                            return res.send("done");
+                                            //return res.send("done");
                                         }
                                     }
                                 }
