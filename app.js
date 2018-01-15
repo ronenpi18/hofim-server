@@ -64,10 +64,108 @@ app.listen(server_port, function () {
 });
 var unirest = require('unirest');
 var BASE_URL="http://hofim-hofim1.7e14.starter-us-west-2.openshiftapps.com";
+
+/**
+ *
+ * @param user
+ * @param callback
+ */
+function requestExc(user, callback) {
+    unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
+        .headers({'Content-Type': 'application/x-www-form-urlencoded'})
+        .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'3fbb73e6022f4776a56142908161810' })
+        .end(function (res) {
+            if (res.error) {
+                console.log('GET error', res.error)
+                callback(res.error, null)
+            } else {
+                if(res.body.data) {
+                    console.log('GET response', res.body)
+                    callback(null, res.body)
+                }else{
+                    setTimeout(function() {
+                        console.log('GET response', res.body)
+                        callback(null, res.body)
+                    }, 200);
+                }
+            }
+        })
+}
+
+
+var update_daily = function() {
+    var beaches = [];
+    var counter = 0;
+    Beach.find({}, function (err, users) {
+        users.forEach(function (user) {
+            var response = requestExc(user, function (error, res1) {
+                // console.log("date array is " + dateArray)
+                if (error === null) {
+                    // respondToSender(res["rate"], res["date"], sender, queryDict)
+                    try {
+                        var data1 = res1.data;
+                        for (var i = 0; i < 5; i++) {
+                            delete data1.weather[i].astronomy;
+                            for (var k = 0; k < 8; k++) {
+                                delete data1.weather[i].hourly[k].waterTemp_F
+                                delete data1.weather[i].hourly[k].FeelsLikeF
+                                delete data1.weather[i].hourly[k].WindGustMiles
+                                delete data1.weather[i].hourly[k].WindChillF
+                                delete data1.weather[i].hourly[k].DewPointF
+                                delete data1.weather[i].hourly[k].HeatIndexF
+                                delete data1.weather[i].hourly[k].weatherIconUrl
+                                delete data1.weather[i].hourly[k].windspeedMiles
+                                delete data1.weather[i].hourly[k].tempF
+                            }
+                        }
+
+                        Beach.findByIdAndUpdate(user._id, {$set: {'weather_general': data1}})
+                            .exec(function (error, beach) {
+                                if (error) {
+                                    next(error);
+                                } else {
+                                    if (beach === null) {
+                                        var err = new Error('Not authorized! Go back!');
+                                        err.status = 400;
+                                        next(err);
+                                    } else {
+                                        //console.log("yay-entered");
+                                        if (counter < 136) {
+                                            counter++;
+                                        }
+                                        else {
+                                            console.log("entered: " + counter);
+                                            counter = 0;
+
+                                            //return res.send("done");
+                                        }
+                                    }
+                                }
+                            });
+                    } catch (e) {
+                        console.log(user && e);
+                        // return res.send();
+                    }
+                } else {
+                    console.log("check ur callback function")
+                    // sendTextMessage(sender, "Imi pare rau, dar am intimpinat o problema in comunicarea cu BNR")
+                }
+            })
+            // unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
+            //     .headers({'Content-Type': 'application/x-www-form-urlencoded'})
+            //     .send({ "q": user.lat + ',' + user.lon + ';', "format": 'json' , "key":'836085e153a4479fa1c223014172612' })
+            //     .end(function (response) {
+            //
+            //     })
+        })
+        return console.log('1');
+    })
+    return console.log('0')
+};
+
 schedule.scheduleJob({hour: 2, minute:5}, function(){
-var Request = unirest.put(BASE_URL+'/v1/api/update/weather_general/3',function (res,callback) {
-    console.log(res.body);
-});
+    update_daily();
+
 });
 
 

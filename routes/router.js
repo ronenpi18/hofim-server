@@ -312,12 +312,12 @@ function requestExc(user, callback) {
 }
 
 
-router.put('/update/weather_general/3',function(req,res,next){
-    var beaches=[];
-    var counter=0;
-    Beach.find({}, function(err, users) {
-        users.forEach(function(user) {
-            var response = requestExc(user,function(error, res1) {
+var a = function() {
+    var beaches = [];
+    var counter = 0;
+    Beach.find({}, function (err, users) {
+        users.forEach(function (user) {
+            var response = requestExc(user, function (error, res1) {
                 // console.log("date array is " + dateArray)
                 if (error === null) {
                     // respondToSender(res["rate"], res["date"], sender, queryDict)
@@ -338,7 +338,7 @@ router.put('/update/weather_general/3',function(req,res,next){
                             }
                         }
 
-                        Beach.findByIdAndUpdate(user._id, {weather_general: data1})
+                        Beach.findByIdAndUpdate(user._id, {$set: {'weather_general': data1}})
                             .exec(function (error, beach) {
                                 if (error) {
                                     next(error);
@@ -349,7 +349,7 @@ router.put('/update/weather_general/3',function(req,res,next){
                                         next(err);
                                     } else {
                                         //console.log("yay-entered");
-                                        if (counter < 138) {
+                                        if (counter < 136) {
                                             counter++;
                                         }
                                         else {
@@ -361,13 +361,13 @@ router.put('/update/weather_general/3',function(req,res,next){
                                     }
                                 }
                             });
-                    }catch (e){
+                    } catch (e) {
                         console.log(user && e);
-                        return res.send();
+                        // return res.send();
                     }
                 } else {
                     console.log("check ur callback function")
-                   // sendTextMessage(sender, "Imi pare rau, dar am intimpinat o problema in comunicarea cu BNR")
+                    // sendTextMessage(sender, "Imi pare rau, dar am intimpinat o problema in comunicarea cu BNR")
                 }
             })
             // unirest.post('http://api.worldweatheronline.com/premium/v1/marine.ashx')
@@ -377,12 +377,15 @@ router.put('/update/weather_general/3',function(req,res,next){
             //
             //     })
         })
-        return res.send()
+        return console.log('1');
     })
-    return res.send("done")
+    return console.log('0')
+}
+
+router.get('/ok/test/1',function (req,res) {
+    a();
+    res.status(200)
 })
-
-
 
 
 router.put('/update/weather_general/3/test',function(req,res,next){
