@@ -5,6 +5,9 @@ var Beach = require("../models/beach");
 var Backup = require("../models/backup");
 var Coordinates = require("../models/coordinates_list");
 var unirest = require('unirest');
+
+var path    = require("path");
+app.use(express.static(__dirname));
 // var data_handler = require('./src/date_handler');
 // var hour = data_handler.get_hour;
 // var time = require('time');
@@ -13,12 +16,16 @@ var unirest = require('unirest');
 // var now = new time.Date();
 
 // GET route for reading data
-router.get('/', function (req, res, next) {
-    if(req.header("authorization")){
-        console.log("header found:"+req.header("authorization"))
-        return res.send('The api is in /v1/api/');
-    }
-    // res.sendFile('/index.html');
+// router.get('/', function (req, res, next) {
+//     if(req.header("authorization")){
+//         console.log("header found:"+req.header("authorization"))
+//         return res.send('The api is in /v1/api/');
+//     }
+//     // res.sendFile('/index.html');
+// });
+app.get('/',function(req,res){
+    res.sendfile(path.join(__dirname+'/index.html'));
+    //__dirname : It will resolve to your project folder.
 });
 
 //get list of beaches coordinates by GET request with country in query, NOTE: Don't forget the form of return : { "data":[{lon:..,lat:..},{...},{...}...]}}
