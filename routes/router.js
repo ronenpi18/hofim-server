@@ -6,8 +6,6 @@ var Backup = require("../models/backup");
 var Coordinates = require("../models/coordinates_list");
 var unirest = require('unirest');
 
-var path    = require("path");
-app.use(express.static(__dirname));
 // var data_handler = require('./src/date_handler');
 // var hour = data_handler.get_hour;
 // var time = require('time');
@@ -23,10 +21,7 @@ app.use(express.static(__dirname));
 //     }
 //     // res.sendFile('/index.html');
 // });
-app.get('/',function(req,res){
-    res.sendfile(path.join(__dirname+'/index.html'));
-    //__dirname : It will resolve to your project folder.
-});
+
 
 //get list of beaches coordinates by GET request with country in query, NOTE: Don't forget the form of return : { "data":[{lon:..,lat:..},{...},{...}...]}}
 router.get('/get_beaches_coords_country',function (req,res,next) {

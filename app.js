@@ -1,6 +1,7 @@
 'use strict';
 var express = require('express');
 var app = express();
+var path    = require("path");
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
@@ -34,9 +35,10 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/',function (req,res) {
-    res.send('The api is in /v1/api/');
-})
+app.get('/',function(req,res){
+    res.sendfile(path.join(__dirname+'/index.html'));
+    //__dirname : It will resolve to your project folder.
+});
 // include routes
 app.use('/v1/api', routes);
 
