@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/',function(req,res){
-    res.sendfile(path.join(__dirname+'/index.html'));
+    res.sendFile(path.join(__dirname+'/index.html'));
     //__dirname : It will resolve to your project folder.
 });
 // include routes
@@ -57,12 +57,12 @@ app.use(function (err, req, res, next) {
 });
 
 //database handler
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080 || process.env.PORT;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 // listen on port 3000
 app.listen(server_port, function () {
-    console.log('Express app listening on port 8080 started at:'+ now());
+    console.log('Express app listening on port'+ server_port+'started at:'+ now());
 });
 var unirest = require('unirest');
 var BASE_URL="http://hofim-hofim1.7e14.starter-us-west-2.openshiftapps.com";
