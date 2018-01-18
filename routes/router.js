@@ -386,7 +386,7 @@ var a = function() {
 
 router.get('/ok/test/1',function (req,res) {
     a();
-    res.status(200)
+    res.send("ok")
 })
 
 
