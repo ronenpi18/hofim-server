@@ -387,6 +387,8 @@ var a = function() {
 router.get('/ok/test/1',function (req,res) {
     a();
     res.send("ok")
+    res.statusCode(200);
+
 })
 
 
