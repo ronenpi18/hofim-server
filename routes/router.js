@@ -379,7 +379,7 @@ var a = function() {
             //
             //     })
         })
-        return console.log('1');
+        console.log('1');
     })
     return console.log('0')
 }
